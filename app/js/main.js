@@ -129,7 +129,11 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
     restaurants.forEach(restaurant => {
         ul.append(createRestaurantHTML(restaurant));
     });
+    restaurants.forEach(restaurant => {
+        createHTMLImages(restaurant);
+    });
     addMarkersToMap();
+    ul.setAttribute("role", "list")
 }
 
 /**
@@ -139,25 +143,8 @@ const createRestaurantHTML = (restaurant) => {
     const li = document.createElement("li");
 
     const picture = document.createElement("picture");
+    picture.id = "picture-" + restaurant.id;
     li.append(picture);
-
-    const source_small = document.createElement("source");
-    source_small.setAttribute("data-srcset", DBHelper.smallImageUrlForRestaurant(restaurant));
-    source_small.setAttribute("media", "(max-width: 674px)");
-    picture.appendChild(source_small);
-
-    const source_large = document.createElement("source");
-    source_large.setAttribute("data-srcset", DBHelper.imageUrlForRestaurant(restaurant));
-    source_large.setAttribute("media", "(min-width: 675px)");
-    picture.appendChild(source_large);
-
-    const image = document.createElement("img");
-    image.className = "restaurant-img";
-    image.src = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
-    image.setAttribute("data-src", DBHelper.imageUrlForRestaurant(restaurant));
-    image.setAttribute("alt", restaurant.name);
-    image.classList.add("lazyload");
-    picture.appendChild(image);
 
     const name = document.createElement("h3");
     name.innerHTML = restaurant.name;
@@ -184,6 +171,28 @@ const createRestaurantHTML = (restaurant) => {
     li.setAttribute("tabindex", "0");
 
     return li;
+}
+
+const createHTMLImages = (restaurant) => {
+    const picture = document.getElementById("picture-"+restaurant.id);
+
+    const source_small = document.createElement("source");
+    source_small.setAttribute("data-srcset", DBHelper.smallImageUrlForRestaurant(restaurant));
+    source_small.setAttribute("media", "(max-width: 674px)");
+    picture.appendChild(source_small);
+
+    const source_large = document.createElement("source");
+    source_large.setAttribute("data-srcset", DBHelper.imageUrlForRestaurant(restaurant));
+    source_large.setAttribute("media", "(min-width: 675px)");
+    picture.appendChild(source_large);
+
+    const image = document.createElement("img");
+    image.className = "restaurant-img";
+    image.src = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+    image.setAttribute("data-src", DBHelper.imageUrlForRestaurant(restaurant));
+    image.setAttribute("alt", restaurant.name);
+    image.classList.add("lazyload");
+    picture.appendChild(image);
 }
 
 /**

@@ -1,7 +1,7 @@
-var cache_name = "my-site-cache-v8";
+var cache_name = "my-site-cache-v10";
 var urlsToCache = [
     "/",
-    "js/lib/jquery-3.3.1.min",
+    "js/lib/jquery-3.3.1.min.js",
     "js/lib/lazysizes.min.js",
     "js/lib/idb.js",
     "js/lib/node.js",
@@ -52,10 +52,4 @@ self.addEventListener("fetch", function(event) {
             return response;
         });
     }));
-});
-
-self.addEventListener('sync', function(event) {
-    if (event.tag == 'myFirstSync') {
-        event.waitUntil(DBHelper.checkConnection());
-    }
 });

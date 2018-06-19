@@ -12,7 +12,8 @@ const gulp = require("gulp"),
     cleanCSS = require("gulp-clean-css"),
     autoprefixer = require("gulp-autoprefixer"),
     sourcemaps = require("gulp-sourcemaps"),
-    runSequence = require("run-sequence");
+    runSequence = require("run-sequence"),
+    strip = require("gulp-strip-comments");
 
 gulp.task("default", ["watch"]);
 
@@ -42,7 +43,8 @@ gulp.task("compress", function(cb) {
             gulp.src("app/js/**/*.js"),
             babel({ presets: [es2015] }),
             uglify(),
-            gulp.dest("build/js")
+            strip(),
+            gulp.dest("build/js/")
         ],
         cb
     );
@@ -54,7 +56,7 @@ gulp.task("minify-css", () => {
         .pipe(autoprefixer())
         .pipe(sourcemaps.write("."))
         .pipe(cleanCSS({ compatibility: "ie8" }))
-        .pipe(gulp.dest("build/css"));
+        .pipe(gulp.dest("build/css/"));
 });
 
 gulp.task("minify", function() {
@@ -64,9 +66,9 @@ gulp.task("minify", function() {
 });
 
 gulp.task("clean", function() {
-    del("dist");
+    del("build/*");
 });
 
 gulp.task("build", function() {
-    runSequence("clean", "minify-css", "minify", "compress", "webp");
+    runSequence("minify-css", "minify", "compress", "webp");
 });

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link rel="preconnect" href="http://localhost:1337">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width" />
     <meta name="theme-color" content="#317EFB" />
@@ -87,17 +88,16 @@
         <!-- End reviews -->
     </main>
     <form id="form-review">
-        Name:
-        <br>
+        <span style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Name:</span>
         <input id="name" type="text" name="name">
-        <br> Rating:
         <br>
+        <span style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Rating:</span>
         <input id="rating" type="text" name="rating">
-        <br> Comments:
+        <br> <span style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Comments:</span>
         <br>
         <input id="comments" type="text" name="comments">
         <br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" style="font-size: 1.5em;width: 40%;background-color: orange;color: #fff;margin: 3% 30%;">
         <input id="restaurant_id" type="hidden" value="" name="restaurant_id">
     </form>
     <!-- End main -->
@@ -105,38 +105,18 @@
     <footer id="footer">
         Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
     </footer>
-    <script type="text/javascript" src="js/lib/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/lib/lazysizes.min.js"></script>
-    <script type="text/javascript" src="js/db/dbhelper.js"></script>
-    <script type="text/javascript" src="js/lib/idb.js"></script>
-    <script type="text/javascript" src="js/db/IndexController.js"></script>
+    <script defer type="text/javascript" src="js/lib/jquery-3.3.1.min.js"></script>
+    <script defer type="text/javascript" src="js/lib/lazysizes.min.js"></script>
+    <script defer type="text/javascript" src="js/db/dbhelper.js"></script>
+    <script defer type="text/javascript" src="js/lib/idb.js"></script>
+    <script defer type="text/javascript" src="js/db/IndexController.js"></script>
     <!-- Main javascript file -->
-    <script type="text/javascript" src="js/restaurant_info.js"></script>
+    <script defer type="text/javascript" src="js/restaurant_info.js"></script>
     <!-- Google Maps -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9xwSuL6xsPdR9eo39tiZxz84sDPH7fAc&v=3.31&libraries=places&callback=initMap"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9xwSuL6xsPdR9eo39tiZxz84sDPH7fAc&v=3.31&libraries=places&callback=initMap"></script>
     <!-- jQuery and Form plugin -->
     </script>
     <script>
-    $("#form-review").on("submit", function(e) {
-        event.preventDefault();
-
-        e.preventDefault();
-        $.ajax({
-            url: "http://localhost:1337/reviews",
-            type: "post",
-            data: $("#form-review").serialize(),
-            success: function() {
-                location.reload();
-            },
-            error: function() {
-                alert("Connection problem");
-                var key = $("#restaurant_id").attr("value");
-                var val = $("#form-review").serialize();
-                console.log(key+", "+val);
-                idbReviews.set(key, val);
-            }
-        });
-    });
     </script>
     <noscript>Your browser does not support JavaScript!</noscript>
 </body>

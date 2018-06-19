@@ -627,6 +627,33 @@
         "createdAt": "2018-06-17T21:36:48.577Z",
         "updatedAt": "2018-06-17T21:36:48.577Z",
         "id": 43
+      },
+      {
+        "name": "fgh",
+        "rating": "fgh",
+        "comments": "fgh",
+        "restaurant_id": "1",
+        "createdAt": "2018-06-18T19:52:02.754Z",
+        "updatedAt": "2018-06-18T19:52:02.754Z",
+        "id": 44
+      },
+      {
+        "name": "chris",
+        "rating": "4",
+        "comments": "asdas",
+        "restaurant_id": "1",
+        "createdAt": "2018-06-19T19:14:51.129Z",
+        "updatedAt": "2018-06-19T19:14:51.129Z",
+        "id": 45
+      },
+      {
+        "name": "asda",
+        "rating": "3",
+        "comments": "asdasd",
+        "restaurant_id": "1",
+        "createdAt": "2018-06-19T19:23:39.628Z",
+        "updatedAt": "2018-06-19T19:23:39.628Z",
+        "id": 46
       }
     ]
   },
@@ -682,7 +709,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 43
+      "id": 46
     }
   }
 }

@@ -161,7 +161,8 @@ const createReviewHTML = (review) => {
     head.appendChild(name);
 
     const date = document.createElement("span");
-    date.innerHTML = review.date;
+    const createdAt = new Date(review.createdAt);
+    date.innerHTML = createdAt.getDate() + '/' + (createdAt.getMonth() + 1) + '/' + createdAt.getFullYear();
     date.classList.add("res-date");
     head.appendChild(date);
     head.classList.add("res-head");
@@ -228,3 +229,24 @@ if ("serviceWorker" in navigator) {
         });
     });
 }
+
+$("#form-review").on("submit", function(e) {
+        event.preventDefault();
+
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost:1337/reviews",
+            type: "post",
+            data: $("#form-review").serialize(),
+            success: function() {
+                location.reload();
+            },
+            error: function() {
+                alert("Connection problem");
+                var key = $("#restaurant_id").attr("value");
+                var val = $("#form-review").serialize();
+                console.log(key + ", " + val);
+                idbReviews.set(key, val);
+            }
+        });
+    });
