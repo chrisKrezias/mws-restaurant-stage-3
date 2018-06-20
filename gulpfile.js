@@ -38,13 +38,56 @@ gulp.task("webp", function() {
         .pipe(gulp.dest("build/img"));
 });
 
-gulp.task("compress", function(cb) {
+gulp.task("compress-main-js", function(cb) {
     pump([
-            gulp.src("app/js/**/*.js"),
+            gulp.src(
+                [
+                    "app/js/lib/lazysizes.min.js",
+                    "app/js/lib/idb.js",
+                    "app/js/db/IndexController.js",
+                    "app/js/db/dbhelper.js",
+                    "app/js/main.js"
+                ]
+            ),
+            babel({ presets: [es2015] }),
+            uglify(),
+            concat("main.js"),
+            strip(),
+            gulp.dest("build/js/")
+        ],
+        cb
+    );
+});
+
+gulp.task("compress-restaurant_info-js", function(cb) {
+    pump([
+            gulp.src(
+                [
+                    "app/js/lib/serialize-0.2.min.js",
+                    "app/js/lib/lazysizes.min.js",
+                    "app/js/lib/idb.js",
+                    "app/js/db/IndexController.js",
+                    "app/js/db/dbhelper.js",
+                    "app/js/restaurant_info.js"
+                ]
+            ),
+            babel({ presets: [es2015] }),
+            uglify(),
+            concat("restaurant_info.js"),
+            strip(),
+            gulp.dest("build/js/")
+        ],
+        cb
+    );
+});
+
+gulp.task("compress-sw-js", function(cb) {
+    pump([
+            gulp.src("app/sw.js"),
             babel({ presets: [es2015] }),
             uglify(),
             strip(),
-            gulp.dest("build/js/")
+            gulp.dest("build/")
         ],
         cb
     );
@@ -70,5 +113,5 @@ gulp.task("clean", function() {
 });
 
 gulp.task("build", function() {
-    runSequence("minify-css", "minify", "compress", "webp");
+    runSequence("minify-css", "minify", "compress-main-js", "compress-restaurant_info-js", "compress-sw-js", "webp");
 });

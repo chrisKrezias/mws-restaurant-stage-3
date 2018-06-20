@@ -230,23 +230,28 @@ if ("serviceWorker" in navigator) {
     });
 }
 
-$("#form-review").on("submit", function(e) {
-        event.preventDefault();
+var form = document.getElementById("form-review");
 
-        e.preventDefault();
-        $.ajax({
-            url: "http://localhost:1337/reviews",
-            type: "post",
-            data: $("#form-review").serialize(),
-            success: function() {
-                location.reload();
-            },
-            error: function() {
-                alert("Connection problem");
-                var key = $("#restaurant_id").attr("value");
-                var val = $("#form-review").serialize();
-                console.log(key + ", " + val);
-                idbReviews.set(key, val);
-            }
-        });
-    });
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    var http = new XMLHttpRequest();
+    var url = "http://localhost:1337/reviews";
+    // var data = new FormData(form);
+    var data = serialize(form);
+    http.open("POST", url, true);
+    //Send the proper header information along with the request
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    http.onerror = function() {
+        alert("Connection problem");
+        var key = document.getElementById("restaurant_id").value;
+        console.log(key + ", " + data);
+        idbReviews.set(key, data);
+    };
+
+    http.send(data);
+
+    if (navigator.onLine) {
+        location.reload();
+    }
+});

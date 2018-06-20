@@ -1,13 +1,8 @@
-var cache_name = "my-site-cache-v10";
+var cache_name = "my-site-cache-v12";
 var urlsToCache = [
     "/",
-    "js/lib/jquery-3.3.1.min.js",
-    "js/lib/lazysizes.min.js",
-    "js/lib/idb.js",
-    "js/lib/node.js",
-    "js/db/IndexController.js",
-    "js/db/dbhelper.js",
     "js/main.js",
+    "js/restaurant_info.js",
     "js/restaurant_info.js",
     "css/styles.css"
 ];

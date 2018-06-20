@@ -654,6 +654,42 @@
         "createdAt": "2018-06-19T19:23:39.628Z",
         "updatedAt": "2018-06-19T19:23:39.628Z",
         "id": 46
+      },
+      {
+        "restaurant_id": "1",
+        "comments": "asdasdad",
+        "rating": "2",
+        "name": "chrius",
+        "createdAt": "2018-06-20T20:44:19.126Z",
+        "updatedAt": "2018-06-20T20:44:19.126Z",
+        "id": 47
+      },
+      {
+        "restaurant_id": "1",
+        "comments": "asdasdad",
+        "rating": "asd",
+        "name": "asdasd",
+        "createdAt": "2018-06-20T21:00:30.214Z",
+        "updatedAt": "2018-06-20T21:00:30.214Z",
+        "id": 48
+      },
+      {
+        "restaurant_id": "1",
+        "comments": "asdasdad",
+        "rating": "asdasd",
+        "name": "asdasd",
+        "createdAt": "2018-06-20T21:14:09.801Z",
+        "updatedAt": "2018-06-20T21:14:09.801Z",
+        "id": 49
+      },
+      {
+        "restaurant_id": "1",
+        "comments": "asdasd",
+        "rating": "asdasd",
+        "name": "asdasd",
+        "createdAt": "2018-06-20T21:21:59.177Z",
+        "updatedAt": "2018-06-20T21:21:59.177Z",
+        "id": 50
       }
     ]
   },
@@ -709,7 +745,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 46
+      "id": 50
     }
   }
 }

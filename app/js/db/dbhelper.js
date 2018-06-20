@@ -78,11 +78,11 @@ class DBHelper {
                                 .objectStore('reviewsdb').getAll();
                         }).then(function(allObjs) {
                             for (let i in allObjs) {
-                                $.ajax({
-                                    url: "http://localhost:1337/reviews",
-                                    type: "post",
-                                    data: allObjs[i]
-                                });
+                                // var data = new FormData(form);
+                                xhr.open("POST", "http://localhost:1337/reviews", true);
+                                //Send the proper header information along with the request
+                                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                xhr.send(allObjs[i]);
                             }
                             idbReviews.clear();
                         });
@@ -239,7 +239,7 @@ class DBHelper {
     }
 }
 
-window.addEventListener('online', function(e) { 
-	console.log('online');
-	DBHelper.checkConnection(); 
+window.addEventListener('online', function(e) {
+    console.log('online');
+    DBHelper.checkConnection();
 });

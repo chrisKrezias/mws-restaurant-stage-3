@@ -174,7 +174,8 @@ const createRestaurantHTML = (restaurant) => {
 }
 
 const createHTMLImages = (restaurant) => {
-    const picture = document.getElementById("picture-"+restaurant.id);
+    const picId = "picture-"+restaurant.id;
+    const picture = document.getElementById(picId);
 
     const source_small = document.createElement("source");
     source_small.setAttribute("data-srcset", DBHelper.smallImageUrlForRestaurant(restaurant));
@@ -192,6 +193,7 @@ const createHTMLImages = (restaurant) => {
     image.setAttribute("data-src", DBHelper.imageUrlForRestaurant(restaurant));
     image.setAttribute("alt", restaurant.name);
     image.classList.add("lazyload");
+
     picture.appendChild(image);
 }
 
@@ -225,6 +227,3 @@ if ("serviceWorker" in navigator) {
     });
 }
 
-
-
-DBHelper.checkConnection();
