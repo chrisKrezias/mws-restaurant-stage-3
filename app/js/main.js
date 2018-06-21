@@ -80,7 +80,7 @@ window.initMap = () => {
         center: loc,
         scrollwheel: false
     });
-    updateRestaurants();
+    // updateRestaurants();
 }
 
 /**
@@ -133,7 +133,7 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
         createHTMLImages(restaurant);
     });
     addMarkersToMap();
-    ul.setAttribute("role", "list")
+    ul.setAttribute("role", "list");
 }
 
 /**
@@ -141,6 +141,14 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 const createRestaurantHTML = (restaurant) => {
     const li = document.createElement("li");
+
+    const favourite = document.createElement("div");
+    favourite.innerHTML = "<div onClick = 'favouriteToggle(this, " + restaurant.id + ")'></div>";
+    favourite.classList.add("favourite");
+    if (restaurant.is_favorite) {
+        favourite.children[0].classList.add("active");
+    }
+    li.append(favourite);
 
     const picture = document.createElement("picture");
     picture.id = "picture-" + restaurant.id;
@@ -174,7 +182,7 @@ const createRestaurantHTML = (restaurant) => {
 }
 
 const createHTMLImages = (restaurant) => {
-    const picId = "picture-"+restaurant.id;
+    const picId = "picture-" + restaurant.id;
     const picture = document.getElementById(picId);
 
     const source_small = document.createElement("source");
@@ -211,6 +219,33 @@ const addMarkersToMap = (restaurants = self.restaurants) => {
     });
 }
 
+const favouriteToggle = function(btn, res_id) {
+    var xhr = new XMLHttpRequest();
+    if (!btn.classList.contains("active")) {
+        xhr.open("PUT", "http://localhost:1337/restaurants/" + res_id + "/");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                btn.classList.add("active");
+            }
+        };
+        xhr.send(JSON.stringify({
+            is_favorite: true
+        }));
+    } else {
+        xhr.open("PUT", "http://localhost:1337/restaurants/" + res_id + "/");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                btn.classList.remove("active");
+            }
+        };
+        xhr.send(JSON.stringify({
+            is_favorite: false
+        }));
+    }
+};
+
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", function() {
         navigator.serviceWorker.register("sw.js").then(function(registration) {
@@ -226,4 +261,3 @@ if ("serviceWorker" in navigator) {
         });
     });
 }
-

@@ -3,6 +3,7 @@
 
 <head>
     <link rel="preconnect" href="http://localhost:1337">
+    <link rel="preconnect" href="https://maps.gstatic.com">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width" />
     <meta name="theme-color" content="#317EFB" />
@@ -55,7 +56,7 @@
         <!-- End nav -->
     </header>
     <!-- Beginning breadcrumb -->
-    <nav aria-label="Breadcrumb" tabindex="0">
+    <nav aria-label="Breadcrumb" role="navigation" tabindex="0">
         <ol id="breadcrumb">
             <li><a href="/">Home</a></li>
         </ol>
@@ -66,7 +67,7 @@
     <main id="maincontent">
         <!-- Beginning map -->
         <section id="map-container" tabindex="-1">
-            <div id="map" role="application"></div>
+            <div id="map" aria-label="location" role="application"></div>
         </section>
         <!-- End map -->
         <!-- Beginning restaurant -->
@@ -88,12 +89,13 @@
         <!-- End reviews -->
     </main>
     <form id="form-review">
-        <span style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Name:</span>
+        <label for="name" style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Name:</label>
         <input id="name" type="text" name="name">
         <br>
-        <span style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Rating:</span>
+        <label for="rating" style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Rating:</label>
         <input id="rating" type="text" name="rating">
-        <br> <span style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Comments:</span>
+        <br> 
+        <label for="comments" style="margin-left: 5%;font-size: 1.5em;color: #fff;"> Comments:</label>
         <br>
         <input id="comments" type="text" name="comments">
         <br>
@@ -105,20 +107,10 @@
     <footer id="footer">
         Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
     </footer>
-    <!-- <script defer type="text/javascript" src="js/lib/jquery-3.3.1.min.js"></script> -->
-   <!--  <script defer src="js/lib/serialize-0.2.min.js" type="text/javascript" charset="utf-8" async defer></script>
-   <script defer type="text/javascript" src="js/lib/lazysizes.min.js"></script>
-   <script defer type="text/javascript" src="js/db/dbhelper.js"></script>
-   <script defer type="text/javascript" src="js/lib/idb.js"></script>
-   <script defer type="text/javascript" src="js/db/IndexController.js"></script>
-   Main javascript file
-   <script defer type="text/javascript" src="js/restaurant_info.js"></script> -->
     <script defer type="application/javascript" charset="utf-8" src="js/restaurant_info.js"></script>
     <!-- Google Maps -->
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9xwSuL6xsPdR9eo39tiZxz84sDPH7fAc&v=3.31&libraries=places&callback=initMap"></script>
     <!-- jQuery and Form plugin -->
-    </script>
-    <script>
     </script>
     <noscript>Your browser does not support JavaScript!</noscript>
 </body>

@@ -3,6 +3,7 @@
 
 <head>
     <link rel="preconnect" href="http://localhost:1337">
+    <link rel="preconnect" href="https://maps.gstatic.com">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#317EFB" />
@@ -49,18 +50,19 @@
     </header>
     <main id="maincontent">
         <section id="map-container" tabindex="-1">
-            <img id="static_map" class="lazyload" onclick="swap_map()" src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&format=jpg" alt="Click for Google Map" style="width:100%;height:100%;"></img>
-            <div id="map" role="application" style="display: none"></div>
+            <button type="button" id="map-button" onclick="swap_map()">Show map!</button>
+            <div id="map" aria-label="location" role="application"></div>
         </section>
         <section id="main">
             <div class="filter-options">
                 <h2>Filter Results</h2>
-                <select id="neighborhoods-select" name="neighborhoods" aria-label="Select preferred neighborhood" onchange="updateRestaurants()">
+                <select id="neighborhoods-select" name="neighborhoods" aria-label="Select preferred neighborhood">
                     <option value="all">All Neighborhoods</option>
                 </select>
-                <select id="cuisines-select" name="cuisines" aria-label="Select preferred cuisine" onchange="updateRestaurants()">
+                <select id="cuisines-select" name="cuisines" aria-label="Select preferred cuisine">
                     <option value="all">All Cuisines</option>
                 </select>
+                <button type="button" onclick="updateRestaurants()">Search</button>
             </div>
             <ul id="restaurants-list"></ul>
         </section>
@@ -71,8 +73,8 @@
     <script>
     const swap_map = () => {
         if (document.getElementById('map').style.display === 'none') {
-            document.getElementById('map').style.display = 'block'
-            document.getElementById('static_map').style.display = 'none'
+            document.getElementById('map').style.display = 'block';
+            document.getElementById('map-button').style.display = 'none';
         }
     }
     </script>
