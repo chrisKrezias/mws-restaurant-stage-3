@@ -2,14 +2,12 @@
  * Common database helper functions.
  */
 class DBHelper {
-
     /**
      * Database URL.
      * Change this to restaurants.json file location on your server.
      */
     static get DATABASE_URL_restaurants() {
-        const port = 1337; // Change this to your server port
-        return `http://localhost:${port}/restaurants`;
+        return "https://sails-server-staging.herokuapp.com/restaurants";
     }
 
     /**
@@ -17,31 +15,41 @@ class DBHelper {
      */
     static fetchRestaurants(callback) {
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', DBHelper.DATABASE_URL_restaurants);
+        xhr.open("GET", DBHelper.DATABASE_URL_restaurants);
 
         xhr.onreadystatechange = function() {
             if (this.readyState == 4) {
                 xhr.onload = () => {
-                    if (xhr.status === 200) { // Got a success response from server!
+                    if (xhr.status === 200) {
+                        // Got a success response from server!
                         const restaurants = JSON.parse(xhr.responseText);
                         idbKeyval.clear();
                         for (let i in restaurants) {
                             idbKeyval.set(restaurants[i].id, restaurants[i]);
                         }
                         callback(null, restaurants);
-                    } else { // Oops!. Got an error from server.
-                        const error = (`Request failed. Returned status of ${xhr.status}`);
-                        dbPromise.then(db => {
-                            return db.transaction('keyval')
-                                .objectStore('keyval').getAll();
-                        }).then(allObjs => callback(null, allObjs));
+                    } else {
+                        // Oops!. Got an error from server.
+                        const error = `Request failed. Returned status of ${xhr.status}`;
+                        dbPromise
+                            .then(db => {
+                                return db
+                                    .transaction("keyval")
+                                    .objectStore("keyval")
+                                    .getAll();
+                            })
+                            .then(allObjs => callback(null, allObjs));
                     }
                 };
                 if (xhr.response == "") {
-                    dbPromise.then(db => {
-                        return db.transaction('keyval')
-                            .objectStore('keyval').getAll();
-                    }).then(allObjs => callback(null, allObjs));
+                    dbPromise
+                        .then(db => {
+                            return db
+                                .transaction("keyval")
+                                .objectStore("keyval")
+                                .getAll();
+                        })
+                        .then(allObjs => callback(null, allObjs));
                 }
             }
         };
@@ -50,12 +58,13 @@ class DBHelper {
 
     static fetchReviews(id, callback) {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:1337/reviews/?restaurant_id=" + id);
+        xhr.open("GET", "https://sails-server-staging.herokuapp.com/reviews/?restaurant_id=" + id);
 
         xhr.onreadystatechange = function() {
             if (this.readyState == 4) {
                 xhr.onload = () => {
-                    if (xhr.status === 200) { // Got a success response from server!
+                    if (xhr.status === 200) {
+                        // Got a success response from server!
                         const reviews = JSON.parse(xhr.responseText);
                         callback(null, reviews);
                     }
@@ -67,33 +76,36 @@ class DBHelper {
 
     static checkConnection() {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:1337/reviews");
+        xhr.open("GET", "https://sails-server-staging.herokuapp.com/reviews");
 
         xhr.onreadystatechange = function() {
             if (this.readyState == 4) {
                 xhr.onload = () => {
-                    if (xhr.status === 200) { // Got a success response from server!
-                        dbReviews.then(db => {
-                            return db.transaction('reviewsdb')
-                                .objectStore('reviewsdb').getAll();
-                        }).then(function(allObjs) {
-                            for (let i in allObjs) {
-                                // var data = new FormData(form);
-                                xhr.open("POST", "http://localhost:1337/reviews", true);
-                                //Send the proper header information along with the request
-                                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                                xhr.send(allObjs[i]);
-                            }
-                            idbReviews.clear();
-                        });
+                    if (xhr.status === 200) {
+                        // Got a success response from server!
+                        dbReviews
+                            .then(db => {
+                                return db
+                                    .transaction("reviewsdb")
+                                    .objectStore("reviewsdb")
+                                    .getAll();
+                            })
+                            .then(function(allObjs) {
+                                for (let i in allObjs) {
+                                    // var data = new FormData(form);
+                                    xhr.open("POST", "https://sails-server-staging.herokuapp.com/reviews", true);
+                                    //Send the proper header information along with the request
+                                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                    xhr.send(allObjs[i]);
+                                }
+                                idbReviews.clear();
+                            });
                     }
                 };
             }
         };
         xhr.send();
     }
-
-
 
     /**
      * Fetch a restaurant by its ID.
@@ -105,10 +117,12 @@ class DBHelper {
                 callback(error, null);
             } else {
                 const restaurant = restaurants.find(r => r.id == id);
-                if (restaurant) { // Got the restaurant
+                if (restaurant) {
+                    // Got the restaurant
                     callback(null, restaurant);
-                } else { // Restaurant does not exist in the database
-                    callback('Restaurant does not exist', null);
+                } else {
+                    // Restaurant does not exist in the database
+                    callback("Restaurant does not exist", null);
                 }
             }
         });
@@ -155,11 +169,13 @@ class DBHelper {
             if (error) {
                 callback(error, null);
             } else {
-                let results = restaurants
-                if (cuisine != 'all') { // filter by cuisine
+                let results = restaurants;
+                if (cuisine != "all") {
+                    // filter by cuisine
                     results = results.filter(r => r.cuisine_type == cuisine);
                 }
-                if (neighborhood != 'all') { // filter by neighborhood
+                if (neighborhood != "all") {
+                    // filter by neighborhood
                     results = results.filter(r => r.neighborhood == neighborhood);
                 }
                 callback(null, results);
@@ -177,9 +193,9 @@ class DBHelper {
                 callback(error, null);
             } else {
                 // Get all neighborhoods from all restaurants
-                const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood)
+                const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
                 // Remove duplicates from neighborhoods
-                const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i)
+                const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
                 callback(null, uniqueNeighborhoods);
             }
         });
@@ -195,9 +211,9 @@ class DBHelper {
                 callback(error, null);
             } else {
                 // Get all cuisines from all restaurants
-                const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
+                const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type);
                 // Remove duplicates from cuisines
-                const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
+                const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i);
                 callback(null, uniqueCuisines);
             }
         });
@@ -207,21 +223,21 @@ class DBHelper {
      * Restaurant page URL.
      */
     static urlForRestaurant(restaurant) {
-        return (`./restaurant.html?id=${restaurant.id}`);
+        return `./restaurant.html?id=${restaurant.id}`;
     }
 
     /**
      * Restaurant image URL.
      */
     static imageUrlForRestaurant(restaurant) {
-        return (`/img/${restaurant.photograph}.webp`);
+        return `/img/${restaurant.photograph}.webp`;
     }
 
     /**
      * Restaurant small image URL.
      */
     static smallImageUrlForRestaurant(restaurant) {
-        return (`/img/small/${restaurant.photograph}.webp`);
+        return `/img/small/${restaurant.photograph}.webp`;
     }
 
     /**
@@ -233,13 +249,12 @@ class DBHelper {
             title: restaurant.name,
             url: DBHelper.urlForRestaurant(restaurant),
             map: map,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
         });
         return marker;
     }
 }
 
-window.addEventListener('online', function(e) {
-    console.log('online');
+window.addEventListener("online", function(e) {
     DBHelper.checkConnection();
 });

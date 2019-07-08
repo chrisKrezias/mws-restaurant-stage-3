@@ -222,7 +222,7 @@ const addMarkersToMap = (restaurants = self.restaurants) => {
 const favouriteToggle = function(btn, res_id) {
     var xhr = new XMLHttpRequest();
     if (!btn.classList.contains("active")) {
-        xhr.open("PUT", "http://localhost:1337/restaurants/" + res_id + "/");
+        xhr.open("PUT", "https://sails-server-staging.herokuapp.com/restaurants/" + res_id + "/");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -233,7 +233,7 @@ const favouriteToggle = function(btn, res_id) {
             is_favorite: true
         }));
     } else {
-        xhr.open("PUT", "http://localhost:1337/restaurants/" + res_id + "/");
+        xhr.open("PUT", "https://sails-server-staging.herokuapp.com/restaurants/" + res_id + "/");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
             if (xhr.status === 200) {

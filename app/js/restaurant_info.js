@@ -45,7 +45,6 @@ const fetchRestaurantFromURL = (callback) => {
         });
         DBHelper.fetchReviews(id, (error, reviews) => {
             self.reviews = reviews;
-            console.log(self.reviews);
             if (!reviews) {
                 console.error(error);
                 return;
@@ -235,7 +234,7 @@ var form = document.getElementById("form-review");
 form.addEventListener("submit", function(e) {
     e.preventDefault();
     var http = new XMLHttpRequest();
-    var url = "http://localhost:1337/reviews";
+    var url = "https://sails-server-staging.herokuapp.com/reviews";
     // var data = new FormData(form);
     var data = serialize(form);
     http.open("POST", url, true);
@@ -245,7 +244,6 @@ form.addEventListener("submit", function(e) {
     http.onerror = function() {
         alert("Connection problem");
         var key = document.getElementById("restaurant_id").value;
-        console.log(key + ", " + data);
         idbReviews.set(key, data);
     };
 
